@@ -26,7 +26,7 @@ function renderLibrary(){
     const p=progress(book);
     return `<article class="book-card">
       <div><div class="book-icon">${book.symbol}</div><h2>${book.title}</h2><p>${book.description}</p></div>
-      <div><div class="book-stats"><span>${book.chapters.length} lessons</span><span>${book.level}</span><span>${p}% complete</span></div>
+      <div><div class="book-stats"><span>${book.chapters.length} pages</span><span>${book.level}</span><span>${p}% complete</span></div>
       <div class="progress-line"><span style="width:${p}%"></span></div>
       <button data-book="${book.id}">${p ? 'Continue reading' : 'Start reading'} →</button></div>
     </article>`;
@@ -47,10 +47,16 @@ function openBook(bookId, chapter=0){
 
 function renderToc(){
   $('#sideTitle').textContent=currentBook.shortTitle;
-  toc.innerHTML=`<button class="toc-home" data-library>← &nbsp;Library</button><div class="toc-section">Contents</div>`+
-    currentBook.chapters.map((c,i)=>`<button class="toc-item ${i===currentChapter?'active':''} ${state.completed[key(currentBook,i)]?'done':''}" data-chapter="${i}"><span class="num">${state.completed[key(currentBook,i)]?'✓':String(i+1).padStart(2,'0')}</span><span>${c.title}</span></button>`).join('');
+  let html=`<button class="toc-home" data-library>← &nbsp;Library</button>`;
+  let lastModule='';
+  currentBook.chapters.forEach((c,i)=>{
+    if(c.module!==lastModule){ html+=`<div class="toc-section">${c.module}</div>`; lastModule=c.module; }
+    html+=`<button class="toc-item ${i===currentChapter?'active':''} ${state.completed[key(currentBook,i)]?'done':''}" data-chapter="${i}"><span class="num">${state.completed[key(currentBook,i)]?'✓':String(i+1).padStart(3,'0')}</span><span>${c.title}</span></button>`;
+  });
+  toc.innerHTML=html;
   $('[data-library]').onclick=renderLibrary;
   document.querySelectorAll('[data-chapter]').forEach(x=>x.onclick=()=>openBook(currentBook.id,+x.dataset.chapter));
+  const active=toc.querySelector('.toc-item.active'); if(active) active.scrollIntoView({block:'nearest'});
 }
 
 function renderSections(ch){
@@ -64,10 +70,10 @@ function renderQA(ch){ return `<h2>Questions & Answers</h2>${ch.qa.map(([q,a])=>
 function renderQuiz(ch){ const q=ch.quiz; return `<div class="quiz" data-answer="${q.answer}"><h3>Quick check</h3><strong>${q.q}</strong>${q.options.map((o,i)=>`<label><input type="radio" name="quiz-${currentBook.id}-${currentChapter}" value="${i}"> ${o}</label>`).join('')}<div class="quiz-result" aria-live="polite"></div></div>`; }
 function renderChapter(){
   const ch=currentBook.chapters[currentChapter];
-  $('#chapterNumber').textContent=`Lesson ${currentChapter+1} of ${currentBook.chapters.length} · ${currentBook.shortTitle}`;
+  $('#chapterNumber').textContent=`Page ${currentChapter+1} of ${currentBook.chapters.length} · ${ch.module}`;
   $('#chapterContent').innerHTML=`<h1>${ch.title}</h1><p class="lead">${ch.intro}</p>${renderSections(ch)}${renderQA(ch)}${renderQuiz(ch)}`;
   $('#prevBtn').disabled=currentChapter===0; $('#nextBtn').disabled=currentChapter===currentBook.chapters.length-1;
-  const done=!!state.completed[key(currentBook,currentChapter)]; $('#completeBtn').textContent=done?'✓ Completed':'Mark complete';
+  const done=!!state.completed[key(currentBook,currentChapter)]; $('#completeBtn').textContent=done?'✓ Completed':'Mark page complete';
   const bookmarked=!!state.bookmarks[key(currentBook,currentChapter)]; $('#bookmarkBtn').textContent=bookmarked?'★ Bookmarked':'☆ Bookmark';
   document.querySelectorAll('.quiz input').forEach(input=>input.onchange=e=>{
     const quiz=e.target.closest('.quiz'); const ok=+e.target.value===+quiz.dataset.answer; quiz.querySelector('.quiz-result').textContent=ok?'✓ Correct — nice work.':'Not quite. Try another answer.';
@@ -102,10 +108,10 @@ searchInput.oninput=()=>{
   if(q.length<2){$('#searchResults').innerHTML='<p style="color:var(--muted)">Type at least 2 characters.</p>';return;}
   const hits=[];
   BOOKS.forEach(book=>book.chapters.forEach((ch,i)=>{
-    const hay=[ch.title,ch.intro,...ch.sections.flatMap(s=>[s.h,...(s.p||[]),s.callout,s.example]),...ch.qa.flat()].filter(Boolean).join(' ').toLowerCase();
+    const hay=[ch.title,ch.intro,ch.module,...ch.sections.flatMap(s=>[s.h,...(s.p||[]),s.callout,s.example]),...ch.qa.flat()].filter(Boolean).join(' ').toLowerCase();
     if(hay.includes(q))hits.push({book,i,ch});
   }));
-  $('#searchResults').innerHTML=hits.length?hits.slice(0,20).map((h,n)=>`<button type="button" class="search-hit" data-hit="${n}"><strong>${h.ch.title}</strong><small>${h.book.shortTitle} · Lesson ${h.i+1}</small></button>`).join(''):'<p style="color:var(--muted)">No matching lessons found.</p>';
+  $('#searchResults').innerHTML=hits.length?hits.slice(0,40).map((h,n)=>`<button type="button" class="search-hit" data-hit="${n}"><strong>${h.ch.title}</strong><small>${h.book.shortTitle} · Page ${h.i+1}</small></button>`).join(''):'<p style="color:var(--muted)">No matching pages found.</p>';
   document.querySelectorAll('[data-hit]').forEach(b=>b.onclick=()=>{const h=hits[+b.dataset.hit];searchDialog.close();openBook(h.book.id,h.i);});
 };
 
