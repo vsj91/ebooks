@@ -1,13 +1,2 @@
-Beginner Books Build 4
-Date: 2026-08-17
-
-Books:
-- Software Testing for Beginners: 100 pages
-- English for Beginners: 100 pages
-
-New in Build 4:
-- AI Tutor chat UI with current-page context
-- Cloudflare Workers AI backend in /worker
-- Browser-native Read Aloud
-- Play/pause/stop, voice selection and speed controls
-- Versioned assets to avoid stale GitHub Pages cache
+Build 5 · 100 pages per book · AI Tutor auto-connected · Read Aloud
+AI endpoint: https://ebooks-ai.vinaysjain-ec.workers.dev/api/chat
