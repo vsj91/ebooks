@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f4efe6" />
+  <meta name="description" content="Beginner-friendly interactive ebooks for Software Testing and English, with lessons, Q&A, quizzes and reading progress." />
+  <title>Beginner Books — Learn at Your Pace</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" aria-label="Open table of contents">☰</button>
+      <a class="brand" href="#" data-home>
+        <span class="brand-mark">B</span>
+        <span><strong>Beginner Books</strong><small>Learn at your pace</small></span>
+      </a>
+      <div class="top-actions">
+        <button class="icon-btn" id="searchBtn" aria-label="Search">⌕</button>
+        <button class="icon-btn" id="readerBtn" aria-label="Reading settings">Aa</button>
+      </div>
+    </header>
+
+    <aside class="sidebar" id="sidebar" aria-label="Book navigation">
+      <div class="sidebar-head">
+        <strong id="sideTitle">Library</strong>
+        <button class="icon-btn close-mobile" id="closeMenuBtn" aria-label="Close menu">×</button>
+      </div>
+      <nav id="toc"></nav>
+    </aside>
+
+    <main class="main" id="main">
+      <section class="library" id="libraryView">
+        <div class="library-hero">
+          <p class="eyebrow">A SMALL DIGITAL LIBRARY</p>
+          <h1>Two beginner-friendly books.<br/>One calm reading experience.</h1>
+          <p>Short lessons, practical examples, questions & answers, mini quizzes and saved progress — designed to feel comfortable on mobile, iPad and laptop.</p>
+        </div>
+        <div class="book-grid" id="bookGrid"></div>
+        <section class="feature-strip">
+          <article><span>◴</span><div><strong>10-minute lessons</strong><small>Learn without feeling overloaded.</small></div></article>
+          <article><span>✓</span><div><strong>Practice as you read</strong><small>Q&A and quick quizzes in every chapter.</small></div></article>
+          <article><span>↺</span><div><strong>Continue anywhere</strong><small>Your progress is saved on this device.</small></div></article>
+        </section>
+      </section>
+
+      <section class="reader hidden" id="readerView">
+        <div class="reader-page">
+          <div class="reader-meta">
+            <span id="chapterNumber"></span>
+            <button class="bookmark-btn" id="bookmarkBtn">☆ Bookmark</button>
+          </div>
+          <article class="chapter" id="chapterContent"></article>
+          <div class="chapter-nav">
+            <button id="prevBtn">← Previous</button>
+            <button id="completeBtn" class="primary">Mark complete</button>
+            <button id="nextBtn">Next →</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay hidden" id="overlay"></div>
+
+  <dialog id="settingsDialog" class="dialog">
+    <form method="dialog">
+      <div class="dialog-head"><strong>Reading settings</strong><button value="close" aria-label="Close">×</button></div>
+      <label>Text size
+        <div class="segmented" id="fontControls">
+          <button type="button" data-font="small">Small</button>
+          <button type="button" data-font="medium">Medium</button>
+          <button type="button" data-font="large">Large</button>
+        </div>
+      </label>
+      <label>Theme
+        <div class="segmented" id="themeControls">
+          <button type="button" data-theme="paper">Paper</button>
+          <button type="button" data-theme="light">Light</button>
+          <button type="button" data-theme="dark">Dark</button>
+        </div>
+      </label>
+    </form>
+  </dialog>
+
+  <dialog id="searchDialog" class="dialog search-dialog">
+    <form method="dialog">
+      <div class="dialog-head"><strong>Search books</strong><button value="close" aria-label="Close">×</button></div>
+      <input id="searchInput" type="search" placeholder="Try “API testing” or “present tense”" autocomplete="off" />
+      <div id="searchResults" class="search-results"></div>
+    </form>
+  </dialog>
+
+  <script src="books.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
