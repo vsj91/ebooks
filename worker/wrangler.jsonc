@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ebooks-ai",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-17",
+  "ai": { "binding": "AI" },
+  "vars": { "ALLOWED_ORIGIN": "https://vsj91.github.io" }
+}

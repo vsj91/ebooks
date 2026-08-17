@@ -1,6 +1,13 @@
-Build 3
-Generated: 2026-08-17
-Testing pages: 100
-English pages: 100
-Total reader pages: 200
-Cache-busting asset names enabled.
+Beginner Books Build 4
+Date: 2026-08-17
+
+Books:
+- Software Testing for Beginners: 100 pages
+- English for Beginners: 100 pages
+
+New in Build 4:
+- AI Tutor chat UI with current-page context
+- Cloudflare Workers AI backend in /worker
+- Browser-native Read Aloud
+- Play/pause/stop, voice selection and speed controls
+- Versioned assets to avoid stale GitHub Pages cache

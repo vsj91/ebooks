@@ -4,29 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#f4efe6" />
-  <meta name="description" content="Two 100-page beginner-friendly interactive ebooks for Software Testing and English, with practice, Q&A, quizzes and reading progress." />
+  <meta name="description" content="Two 100-page beginner-friendly interactive ebooks for Software Testing and English, with AI tutoring, read aloud, practice, Q&A, quizzes and reading progress." />
   <title>Beginner Books — Learn at Your Pace</title>
-  <link rel="stylesheet" href="styles-v3.css?v=20260817-1328" />
+  <link rel="stylesheet" href="styles-v4.css?v=20260817-1340" />
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <button class="icon-btn" id="menuBtn" aria-label="Open table of contents">☰</button>
-      <a class="brand" href="#" data-home>
-        <span class="brand-mark">B</span>
-        <span><strong>Beginner Books</strong><small>Learn at your pace</small></span>
-      </a>
+      <a class="brand" href="#" data-home><span class="brand-mark">B</span><span><strong>Beginner Books</strong><small>Learn at your pace</small></span></a>
       <div class="top-actions">
+        <button class="icon-btn hidden" id="voiceBtn" aria-label="Read page aloud">🔊</button>
+        <button class="ai-top hidden" id="aiTopBtn" aria-label="Ask AI tutor">✦ AI</button>
         <button class="icon-btn" id="searchBtn" aria-label="Search">⌕</button>
         <button class="icon-btn" id="readerBtn" aria-label="Reading settings">Aa</button>
       </div>
     </header>
 
     <aside class="sidebar" id="sidebar" aria-label="Book navigation">
-      <div class="sidebar-head">
-        <strong id="sideTitle">Library</strong>
-        <button class="icon-btn close-mobile" id="closeMenuBtn" aria-label="Close menu">×</button>
-      </div>
+      <div class="sidebar-head"><strong id="sideTitle">Library</strong><button class="icon-btn close-mobile" id="closeMenuBtn" aria-label="Close menu">×</button></div>
       <nav id="toc"></nav>
     </aside>
 
@@ -34,66 +30,59 @@
       <section class="library" id="libraryView">
         <div class="library-hero">
           <p class="eyebrow">A SMALL DIGITAL LIBRARY</p>
-          <h1>Two complete 100-page books.<br/>One calm reading experience.</h1>
-          <p>200 learning pages in total, with practical explanations, examples, questions & answers, mini quizzes and saved progress — designed to feel comfortable on mobile, iPad and laptop.</p>
-        <p style="font-size:.8rem;opacity:.65;margin-top:.75rem">Build 3 · 100 pages per book</p>
+          <h1>Two complete 100-page books.<br/>Now with AI + Read Aloud.</h1>
+          <p>200 learning pages in total, with practical explanations, examples, questions & answers, mini quizzes, an AI tutor and page-by-page voice reading.</p>
+          <p class="build-label">Build 4 · AI Tutor · Voice Reader · 100 pages per book</p>
         </div>
         <div class="book-grid" id="bookGrid"></div>
         <section class="feature-strip">
-          <article><span>◴</span><div><strong>5–8 minute pages</strong><small>Learn without feeling overloaded.</small></div></article>
-          <article><span>✓</span><div><strong>Practice as you read</strong><small>Q&A and a quick quiz on every learning page.</small></div></article>
+          <article><span>🔊</span><div><strong>Read aloud</strong><small>Listen to every page with browser voices and speed control.</small></div></article>
+          <article><span>✦</span><div><strong>Ask AI tutor</strong><small>Ask questions using the current lesson as context.</small></div></article>
           <article><span>↺</span><div><strong>Continue anywhere</strong><small>Your progress is saved on this device.</small></div></article>
         </section>
       </section>
 
       <section class="reader hidden" id="readerView">
         <div class="reader-page">
-          <div class="reader-meta">
-            <span id="chapterNumber"></span>
-            <button class="bookmark-btn" id="bookmarkBtn">☆ Bookmark</button>
+          <div class="reader-meta"><span id="chapterNumber"></span><button class="bookmark-btn" id="bookmarkBtn">☆ Bookmark</button></div>
+          <div class="voice-bar" aria-label="Read aloud controls">
+            <div><strong id="voicePageLabel">Read this page</strong><small id="voiceStatus">Voice reader ready</small></div>
+            <div class="voice-actions"><button id="readAloudBtn">▶ Read aloud</button><button id="pauseReadBtn" disabled>⏸ Pause</button><button id="stopReadBtn">■ Stop</button></div>
           </div>
           <article class="chapter" id="chapterContent"></article>
-          <div class="chapter-nav">
-            <button id="prevBtn">← Previous</button>
-            <button id="completeBtn" class="primary">Mark complete</button>
-            <button id="nextBtn">Next →</button>
-          </div>
+          <div class="chapter-nav"><button id="prevBtn">← Previous</button><button id="completeBtn" class="primary">Mark complete</button><button id="nextBtn">Next →</button></div>
         </div>
       </section>
     </main>
   </div>
 
+  <button id="aiFab" class="ai-fab hidden" aria-label="Ask AI tutor">✦ <span>Ask AI</span></button>
   <div class="overlay hidden" id="overlay"></div>
 
-  <dialog id="settingsDialog" class="dialog">
+  <dialog id="settingsDialog" class="dialog settings-dialog">
     <form method="dialog">
       <div class="dialog-head"><strong>Reading settings</strong><button value="close" aria-label="Close">×</button></div>
-      <label>Text size
-        <div class="segmented" id="fontControls">
-          <button type="button" data-font="small">Small</button>
-          <button type="button" data-font="medium">Medium</button>
-          <button type="button" data-font="large">Large</button>
-        </div>
-      </label>
-      <label>Theme
-        <div class="segmented" id="themeControls">
-          <button type="button" data-theme="paper">Paper</button>
-          <button type="button" data-theme="light">Light</button>
-          <button type="button" data-theme="dark">Dark</button>
-        </div>
-      </label>
+      <label>Text size<div class="segmented" id="fontControls"><button type="button" data-font="small">Small</button><button type="button" data-font="medium">Medium</button><button type="button" data-font="large">Large</button></div></label>
+      <label>Theme<div class="segmented" id="themeControls"><button type="button" data-theme="paper">Paper</button><button type="button" data-theme="light">Light</button><button type="button" data-theme="dark">Dark</button></div></label>
+      <div class="setting-block"><strong>Read aloud voice</strong><select id="voiceSelect"><option value="">Automatic English voice</option></select><label class="compact-label">Speed<select id="voiceRate"><option value="0.8">0.8×</option><option value="1">1×</option><option value="1.2">1.2×</option><option value="1.4">1.4×</option></select></label></div>
+      <div class="setting-block"><strong>AI tutor endpoint</strong><small>Paste the deployed Cloudflare Worker URL ending in <code>/api/chat</code>.</small><input id="aiEndpointInput" type="url" placeholder="https://ebooks-ai.your-subdomain.workers.dev/api/chat" /><button type="button" class="save-setting" id="saveAiEndpoint">Save AI endpoint</button><small id="aiEndpointStatus"></small></div>
     </form>
   </dialog>
 
-  <dialog id="searchDialog" class="dialog search-dialog">
-    <form method="dialog">
-      <div class="dialog-head"><strong>Search books</strong><button value="close" aria-label="Close">×</button></div>
-      <input id="searchInput" type="search" placeholder="Try “API testing” or “present tense”" autocomplete="off" />
-      <div id="searchResults" class="search-results"></div>
-    </form>
+  <dialog id="searchDialog" class="dialog search-dialog"><form method="dialog"><div class="dialog-head"><strong>Search books</strong><button value="close" aria-label="Close">×</button></div><input id="searchInput" type="search" placeholder="Try “API testing” or “present tense”" autocomplete="off" /><div id="searchResults" class="search-results"></div></form></dialog>
+
+  <dialog id="aiDialog" class="dialog ai-dialog">
+    <div class="ai-shell">
+      <div class="dialog-head ai-head"><div><strong>✦ AI Tutor</strong><small id="aiContext"></small></div><button value="close" aria-label="Close" onclick="this.closest('dialog').close()">×</button></div>
+      <div class="ai-toolbar"><button type="button" id="aiSetupBtn">⚙ Setup</button><button type="button" id="aiClear">Clear chat</button></div>
+      <div class="ai-messages" id="aiMessages" aria-live="polite"></div>
+      <div class="ai-composer"><textarea id="aiInput" rows="2" placeholder="Ask: Explain this simply… Give me another example… Quiz me…"></textarea><button id="aiSend" type="button">Send</button></div>
+      <small class="ai-note">AI can make mistakes. Use it as a learning assistant, not as the only source of truth.</small>
+    </div>
   </dialog>
 
-  <script src="books-100-v3.js?v=20260817-1328"></script>
-  <script src="app-v3.js?v=20260817-1328"></script>
+  <script src="books-100-v4.js?v=20260817-1340"></script>
+  <script src="ai-config-v4.js?v=20260817-1340"></script>
+  <script src="app-v4.js?v=20260817-1340"></script>
 </body>
 </html>
