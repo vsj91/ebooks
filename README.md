@@ -1,68 +1,22 @@
-# Beginner Books — Build 4
+# Beginner Books — Build 6
 
-A reader-friendly static ebook website for GitHub Pages with **AI Tutor** and **Read Aloud**.
+A GitHub Pages-ready interactive learning library with **30 original beginner books × 100 pages each = 3,000 reading pages**.
 
-## Books
+Features:
+- AI Tutor automatically connected to the configured Cloudflare Worker
+- Browser-native Read Aloud
+- Q&A and mini quiz on every page
+- Saved reading progress and bookmarks
+- Category filters for Technology, Language, Career, Money, Growth, Health and Wisdom
+- Mobile, iPad and laptop responsive reader
 
-- **Software Testing for Beginners** — 100 reading pages across 10 modules
-- **English for Beginners** — 100 reading pages across 10 modules
+## Copyright / content note
+The library does **not** reproduce modern copyrighted books such as *Atomic Habits* or *The Psychology of Money*. Instead it contains original courses on habit building and money psychology. The Bhagavad Gita book uses original beginner commentary rather than copying a modern translation.
 
-Every page includes a beginner explanation, practical example, exercise, Q&A and mini quiz.
+## Health note
+Health books are general education only. They do not diagnose or treat disease. The Detox Myths book is deliberately safety-first: evidence reviews from the U.S. NCCIH report no compelling evidence that commercial detox diets remove toxins or provide lasting weight-management benefits, and some cleanses can be unsafe. Nutrition content follows broad WHO healthy-diet principles such as adequacy, balance, moderation and diversity.
 
-## Reader features
+## Deployment
+Upload all files to the repository root. GitHub Pages can publish from `main` / root, or use the included GitHub Actions workflow.
 
-- 200 learning pages total
-- Responsive mobile, iPad and laptop layout
-- Module-based table of contents
-- Search, bookmarks and completion tracking
-- Saved progress with localStorage
-- Paper, light and dark themes
-- Small/medium/large fonts
-- **Read Aloud** using the browser speech engine
-- Voice selection and 0.8× / 1× / 1.2× / 1.4× speed
-- **AI Tutor** that receives the current page as context
-
-## 1. GitHub Pages
-
-Upload the site files to the repository root. The included `.github/workflows/pages.yml` can deploy the site when GitHub Pages Source is set to **GitHub Actions**.
-
-Project URL: `https://vsj91.github.io/ebooks/`
-
-## 2. Deploy the AI Tutor Worker
-
-The website itself remains static. AI requests go to the Cloudflare Worker in `/worker`, so no API token is exposed in browser JavaScript.
-
-### Wrangler method
-
-```bash
-cd worker
-npm install
-npx wrangler login
-npm run deploy
-```
-
-The deployment prints a URL similar to:
-
-```text
-https://ebooks-ai.<your-subdomain>.workers.dev
-```
-
-Your chatbot endpoint is:
-
-```text
-https://ebooks-ai.<your-subdomain>.workers.dev/api/chat
-```
-
-Open the ebook site → **Aa (Reading settings)** → **AI tutor endpoint**, paste that URL, and save it.
-
-Alternatively, put the URL in `ai-config-v4.js` and commit it.
-
-### Cloudflare configuration
-
-`worker/wrangler.jsonc` already defines the Workers AI binding as `AI` and allows requests from `https://vsj91.github.io`.
-
-The Worker uses `@cf/zai-org/glm-4.7-flash`. If you later use a custom domain, change `ALLOWED_ORIGIN` in `worker/wrangler.jsonc` to that site's origin.
-
-## Voice reader
-
-Read Aloud does not call the AI Worker. It uses `window.speechSynthesis` and the voices installed/provided by the user's browser/device. Voice availability therefore varies by device and browser.
+AI endpoint: `https://ebooks-ai.vinaysjain-ec.workers.dev/api/chat`

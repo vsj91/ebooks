@@ -1,2 +1,1 @@
-Build 5 · 100 pages per book · AI Tutor auto-connected · Read Aloud
-AI endpoint: https://ebooks-ai.vinaysjain-ec.workers.dev/api/chat
+Build 6 · 30 books · 100 pages each · 3,000 pages · AI Tutor auto-connected · Read Aloud

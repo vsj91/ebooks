@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#f4efe6" />
-  <meta name="description" content="Two 100-page beginner-friendly interactive ebooks for Software Testing and English, with AI tutoring, read aloud, practice, Q&A, quizzes and reading progress." />
-  <title>Beginner Books — Learn at Your Pace</title>
-  <link rel="stylesheet" href="styles-v5.css?v=20260817-1400" />
+  <meta name="description" content="A 30-book beginner learning library with 3,000 reading pages, AI tutoring, read aloud, practice, Q&A, quizzes and saved progress." />
+  <title>Beginner Books — 30 Free Interactive Learning Books</title>
+  <link rel="stylesheet" href="styles-v6.css?v=20260817-1530" />
 </head>
 <body>
   <div class="app-shell">
@@ -29,10 +29,12 @@
     <main class="main" id="main">
       <section class="library" id="libraryView">
         <div class="library-hero">
-          <p class="eyebrow">A SMALL DIGITAL LIBRARY</p>
-          <h1>Two complete 100-page books.<br/>Now with AI + Read Aloud.</h1>
-          <p>200 learning pages in total, with practical explanations, examples, questions & answers, mini quizzes, an AI tutor and page-by-page voice reading.</p>
-          <p class="build-label">Build 4 · AI Tutor · Voice Reader · 100 pages per book</p>
+          <p class="eyebrow">A LARGE BEGINNER LEARNING LIBRARY</p>
+          <h1>30 books. 100 pages each.<br/>AI tutor + Read Aloud.</h1>
+          <p id="libraryCount">30 books · 3,000 learning pages</p>
+          <p>Technology, English, career, money, habits, health and wisdom — all written as original beginner courses with examples, Q&A and quizzes.</p>
+          <p class="build-label">Build 6 · 30 books · 3,000 pages · Automatic AI Tutor · Voice Reader</p>
+          <div class="category-filters" id="categoryFilters" aria-label="Filter books by category"></div>
         </div>
         <div class="book-grid" id="bookGrid"></div>
         <section class="feature-strip">
@@ -68,7 +70,7 @@
     </form>
   </dialog>
 
-  <dialog id="searchDialog" class="dialog search-dialog"><form method="dialog"><div class="dialog-head"><strong>Search books</strong><button value="close" aria-label="Close">×</button></div><input id="searchInput" type="search" placeholder="Try “API testing” or “present tense”" autocomplete="off" /><div id="searchResults" class="search-results"></div></form></dialog>
+  <dialog id="searchDialog" class="dialog search-dialog"><form method="dialog"><div class="dialog-head"><strong>Search books</strong><button value="close" aria-label="Close">×</button></div><input id="searchInput" type="search" placeholder="Try “Java”, “nutrition”, “habits” or “Bhagavad Gita”" autocomplete="off" /><div id="searchResults" class="search-results"></div></form></dialog>
 
   <dialog id="aiDialog" class="dialog ai-dialog">
     <div class="ai-shell">
@@ -80,8 +82,8 @@
     </div>
   </dialog>
 
-  <script src="books-100-v5.js?v=20260817-1400"></script>
-  <script src="ai-config-v5.js?v=20260817-1400"></script>
-  <script src="app-v5.js?v=20260817-1400"></script>
+  <script src="books-library-v6.js?v=20260817-1530"></script>
+  <script src="ai-config-v6.js?v=20260817-1530"></script>
+  <script src="app-v6.js?v=20260817-1530"></script>
 </body>
 </html>
