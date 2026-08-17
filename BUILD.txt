@@ -1,0 +1,6 @@
+Build 3
+Generated: 2026-08-17
+Testing pages: 100
+English pages: 100
+Total reader pages: 200
+Cache-busting asset names enabled.
